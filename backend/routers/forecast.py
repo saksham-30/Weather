@@ -8,8 +8,9 @@ from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.preprocessing import StandardScaler
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
+from pathlib import Path
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 router = APIRouter()
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
@@ -86,7 +87,7 @@ def fetch_historical(lat: float, lon: float, days: int = 30) -> pd.DataFrame:
         "humidity": d.get("relative_humidity_2m_mean", [None]*len(d["time"])),
         "pressure": d.get("pressure_msl_mean", [None]*len(d["time"])),
     })
-    df = df.fillna(method="ffill").fillna(method="bfill")
+    df = df.ffill().bfill()
     return df
 
 
