@@ -1,0 +1,31 @@
+{
+  "name": "weather-intelligence",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@react-google-maps/api": "^2.20.8",
+    "@react-oauth/google": "^0.13.5",
+    "axios": "^1.6.0",
+    "firebase": "^12.12.1",
+    "leaflet": "^1.9.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.0.0",
+    "react-leaflet": "^3.2.5",
+    "react-scripts": "5.0.1",
+    "recharts": "^2.10.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead"
+    ],
+    "development": [
+      "last 1 chrome version"
+    ]
+  }
+}

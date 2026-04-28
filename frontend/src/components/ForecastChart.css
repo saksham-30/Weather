@@ -1,0 +1,90 @@
+.forecast-chart { display: flex; flex-direction: column; gap: 14px; }
+
+.fc-section-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  color: #4a5a7a;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: -8px;
+}
+
+/* ── Day cards ── */
+.fc-day-cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.fc-day-card {
+  background: #0d1526;
+  border: 1px solid #1a2744;
+  border-radius: 12px;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: border-color 0.2s, transform 0.15s;
+}
+.fc-day-card:hover {
+  border-color: #6366f1;
+  transform: translateY(-2px);
+}
+
+.fc-day-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #8ab4f8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.fc-day-icon { width: 44px; height: 44px; }
+
+.fc-day-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.62rem;
+  color: #4a5a7a;
+  text-align: center;
+  text-transform: capitalize;
+  line-height: 1.3;
+}
+
+.fc-day-temps {
+  display: flex;
+  gap: 4px;
+  align-items: baseline;
+  margin-top: 2px;
+}
+.fc-day-max {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f6a623;
+}
+.fc-day-min {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  color: #4e9af1;
+}
+
+.fc-day-meta {
+  display: flex;
+  gap: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.62rem;
+  color: #4a5a7a;
+}
+
+/* Tooltip */
+.custom-tooltip {
+  background: #0d1526;
+  border: 1px solid #1a2744;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  font-family: 'DM Sans', sans-serif;
+}
+.tt-label { color: #8ab4f8; margin-bottom: 4px; font-weight: 500; }

@@ -1,0 +1,41 @@
+.current-weather { display: flex; flex-direction: column; gap: 20px; }
+
+.temp-hero {
+  display: flex; align-items: center; gap: 16px;
+  background: linear-gradient(135deg, #0d1f3c, #1a2f5a);
+  border-radius: 16px; padding: 20px;
+  border: 1px solid #1a2744;
+}
+.weather-icon-large { width: 90px; height: 90px; }
+.temp-info { display: flex; flex-direction: column; }
+.temp-main { font-size: 3.5rem; font-weight: 700; color: #e0e6f0; line-height: 1; }
+.feels-like { font-size: 0.85rem; color: #4e9af1; margin-top: 6px; }
+
+.stats-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.stat-card {
+  display: flex; align-items: center; gap: 12px;
+  background: #0d1526; border: 1px solid #1a2744;
+  border-radius: 12px; padding: 12px 14px;
+}
+.stat-icon { font-size: 1.8rem; color: #4e9af1; }
+.stat-info { display: flex; flex-direction: column; }
+.stat-label { font-size: 0.72rem; color: #4a5a7a; text-transform: uppercase; }
+.stat-value { font-size: 1rem; font-weight: 600; color: #e0e6f0; }
+
+.sun-times {
+  display: flex; align-items: center;
+  background: #0d1526; border: 1px solid #1a2744;
+  border-radius: 12px; padding: 16px;
+}
+.sun-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  font-size: 0.85rem; color: #8ab4f8;
+}
+.sun-item strong { font-size: 1rem; color: #e0e6f0; }
+.sun-icon { font-size: 1.5rem; }
+.sun-icon.rise { color: #f6a623; }
+.sun-icon.set { color: #e05c5c; }
+.sun-divider { width: 1px; height: 50px; background: #1a2744; margin: 0 16px; }

@@ -1,0 +1,15 @@
+.stats-charts { display: flex; flex-direction: column; gap: 12px; }
+
+.charts-row { display: flex; gap: 12px; }
+
+.chart-box {
+  flex: 1;
+  background: #0d1526;
+  border: 1px solid #1a2744;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.chart-box.full { width: 100%; flex: unset; }
+.chart-box h4 { font-size: 0.78rem; color: #4a5a7a; text-transform: uppercase; margin-bottom: 4px; align-self: flex-start; }
+.chart-label { font-size: 1.1rem; font-weight: 600; color: #4e9af1; margin-top: 4px; }
