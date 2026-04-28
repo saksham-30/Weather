@@ -19,11 +19,31 @@
       "dest": "api/index.py"
     },
     {
+      "src": "/static/(.*)",
+      "dest": "/frontend/static/$1"
+    },
+    {
+      "src": "/asset-manifest.json",
+      "dest": "/frontend/asset-manifest.json"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "/frontend/manifest.json"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/frontend/favicon.ico"
+    },
+    {
+      "src": "/",
+      "dest": "/frontend/index.html"
+    },
+    {
       "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/frontend/index.html"
     }
   ]
 }
