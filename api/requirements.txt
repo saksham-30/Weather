@@ -1,1 +1,14 @@
--r ../backend/requirements.txt
+fastapi
+uvicorn[standard]
+requests
+pandas
+numpy
+scikit-learn
+python-dotenv
+google-generativeai
+google-auth
+google-genai
+python-jose[cryptography]
+passlib[bcrypt]
+reportlab
+fastapi[all]
