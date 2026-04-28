@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "./AuthModal.css";
 
@@ -9,6 +9,9 @@ export default function AuthModal({ onClose, onAuth }) {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const googleInitRef = useRef(false);
+
+  const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
 
   const handle = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
 
@@ -34,6 +37,100 @@ export default function AuthModal({ onClose, onAuth }) {
       setError(e.response?.data?.detail || "Something went wrong");
     } finally {
       setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (mode !== "register" || !GOOGLE_CLIENT_ID || typeof window === "undefined") return;
+
+    const loadGoogleIdentity = async () => {
+      if (!window.google?.accounts?.id) {
+        await new Promise((resolve, reject) => {
+          const existingScript = document.querySelector('script[data-google-identity="true"]');
+          if (existingScript) {
+            existingScript.addEventListener("load", resolve, { once: true });
+            existingScript.addEventListener("error", reject, { once: true });
+            return;
+          }
+
+          const script = document.createElement("script");
+          script.src = "https://accounts.google.com/gsi/client";
+          script.async = true;
+          script.defer = true;
+          script.dataset.googleIdentity = "true";
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+      }
+
+      if (!googleInitRef.current) {
+        window.google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: async (response) => {
+            try {
+              setError("");
+              setLoading(true);
+              const res = await axios.post(`${API}/auth/google`, { credential: response.credential });
+              persist(res.data);
+            } catch (err) {
+              setError(err.response?.data?.detail || "Google sign-in failed");
+            } finally {
+              setLoading(false);
+            }
+          },
+        });
+        googleInitRef.current = true;
+      }
+    };
+
+    loadGoogleIdentity().catch(() => {
+      setError("Google sign-in could not be loaded right now.");
+    });
+  }, [mode, GOOGLE_CLIENT_ID]);
+
+  const startGoogleSignIn = async () => {
+    setError("");
+
+    if (!GOOGLE_CLIENT_ID) {
+      setError("Google sign-in is not configured yet.");
+      return;
+    }
+
+    try {
+      if (!window.google?.accounts?.id) {
+        await new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = "https://accounts.google.com/gsi/client";
+          script.async = true;
+          script.defer = true;
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+      }
+
+      if (!googleInitRef.current) {
+        window.google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: async (response) => {
+            try {
+              setLoading(true);
+              const res = await axios.post(`${API}/auth/google`, { credential: response.credential });
+              persist(res.data);
+            } catch (err) {
+              setError(err.response?.data?.detail || "Google sign-in failed");
+            } finally {
+              setLoading(false);
+            }
+          },
+        });
+        googleInitRef.current = true;
+      }
+
+      window.google.accounts.id.prompt();
+    } catch {
+      setError("Google sign-in could not be started.");
     }
   };
 
@@ -72,6 +169,22 @@ export default function AuthModal({ onClose, onAuth }) {
               <input name="password" type="password" placeholder="••••••••" value={form.password} onChange={handle} required />
             </div>
             {error && <div className="auth-error">{error}</div>}
+
+            {mode === "register" && (
+              <>
+                <div className="auth-divider"><span>or</span></div>
+                <button
+                  type="button"
+                  className="google-signin-btn"
+                  onClick={startGoogleSignIn}
+                  disabled={loading}
+                >
+                  <span className="google-badge">G</span>
+                  Continue with Google
+                </button>
+              </>
+            )}
+
             <button type="submit" className="auth-submit" disabled={loading}>
               {loading ? "Please wait..." : mode === "login" ? "Sign In" : "Create Account"}
             </button>
